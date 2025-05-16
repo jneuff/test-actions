@@ -1,0 +1,46 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main]
+    tags:
+      - image@v*
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "Event type: ${{ github.event_name }}"
+          echo "Ref: ${{ github.ref }}"
+          echo "Ref type: ${{ github.ref_type }}"
+          echo "Ref name: ${{ github.ref_name }}"
+
+
+  only-commit:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - run: |
+          echo "Only commit"
+
+
+  only-tag:
+    runs-on: ubuntu-latest
+    if: github.ref_type == 'tag'
+    steps:
+      - run: |
+          echo "Only tag"
+
+  only-tag-special:
+    runs-on: ubuntu-latest
+    if: github.ref_type == 'tag' && startsWith(github.ref_name, 'image@v')
+    steps:
+      - run: |
+          echo "Only tag special"

@@ -44,3 +44,32 @@ jobs:
     steps:
       - run: |
           echo "Only tag special"
+
+  # integration-test:
+  #   uses: jneuff/test-actions/.github/workflows/reusable.yaml@${{ github.ref_name }}
+
+  integration-test:
+    name: Generate output
+    runs-on: ubuntu-latest
+    # Map the job outputs to step outputs
+    steps:
+      - id: step1
+        run: echo "firstword=hello" >> $GITHUB_OUTPUT
+      - id: step2
+        run: echo "secondword=world" >> $GITHUB_OUTPUT
+
+  release-please:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      repository-projects: write
+      issues: write
+    needs: ["integration-test"]
+    steps:
+      - id: release-please
+        uses: googleapis/release-please-action@v4
+      - if: ${{ steps.release-please.outputs.release_created }}
+        run: echo ${{ steps.release-please.outputs.tag_name }}
+      - if: ${{ needs.integration-test.result }} == 'success'
+        run: echo "integration tests pass"

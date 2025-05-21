@@ -80,5 +80,6 @@ jobs:
     steps:
       - run: |
           echo "Separate job"
+          echo ${{ needs.release-please.outputs }}
       - if: ${{ needs.release-please.outputs.release_created }} && ${{ needs.integration-test.result }} == 'success'
         run: echo ${{ needs.release-please.outputs.tag_name }}

@@ -66,6 +66,9 @@ jobs:
       repository-projects: write
       issues: write
     needs: ["integration-test"]
+    outputs:
+      release_created: ${{ steps.release-please.outputs.release_created }}
+      tag_name: ${{ steps.release-please.outputs.tag_name }}
     steps:
       - id: release-please
         uses: googleapis/release-please-action@v4

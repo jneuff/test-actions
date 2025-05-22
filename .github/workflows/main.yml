@@ -108,5 +108,5 @@ jobs:
           git add values.yaml
           git commit -m "feat: update image tag to sha-${{ github.sha }}"
           git push origin image-tag-sha-${{ github.sha }}
-          gh pr create --base main --head image-tag-sha-${{ github.sha }}
+          gh pr create --base main --head image-tag-sha-${{ github.sha }} --fill
           gh pr merge --auto --squash

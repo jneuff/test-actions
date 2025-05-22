@@ -13,6 +13,13 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  long-running-test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "Long running test"
+          sleep 30
+
   debug:
     runs-on: ubuntu-latest
     steps:

@@ -101,7 +101,7 @@ jobs:
       contents: write
       pull-requests: write
     env:
-      GH_TOKEN: ${{ secrets.DEPLOY_KEY }}
+      GH_TOKEN: ${{ secrets.PAT_PR }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

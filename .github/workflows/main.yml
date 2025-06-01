@@ -96,6 +96,7 @@ jobs:
 
   update-image-in-chart:
     needs: integration-test
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
       contents: write

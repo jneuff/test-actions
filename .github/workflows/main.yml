@@ -53,7 +53,7 @@ jobs:
           echo "Only tag special"
 
   integration-test-reusable:
-    uses: jneuff/test-actions/.github/workflows/reusable.yaml@${{ github.ref_name }}
+    uses: jneuff/test-actions/.github/workflows/reusable.yaml@main
 
   integration-test:
     name: Generate output

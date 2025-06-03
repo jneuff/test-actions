@@ -52,8 +52,8 @@ jobs:
       - run: |
           echo "Only tag special"
 
-  # integration-test:
-  #   uses: jneuff/test-actions/.github/workflows/reusable.yaml@${{ github.ref_name }}
+  integration-test-reusable:
+    uses: jneuff/test-actions/.github/workflows/reusable.yaml@${{ github.ref_name }}
 
   integration-test:
     name: Generate output
@@ -94,27 +94,27 @@ jobs:
       - if: ${{ needs.release-please.outputs.release_created }} && ${{ needs.integration-test.result }} == 'success'
         run: echo ${{ needs.release-please.outputs.tag_name }}
 
-  update-image-in-chart:
-    needs: integration-test
-    if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
-    env:
-      GH_TOKEN: ${{ secrets.PAT_PR }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Open PR to update image in chart
-        run: |
-          git config --global user.email "nobody@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
-          git fetch origin
-          git switch -c image-tag-sha-${{ github.sha }}
-          echo "image: sha-${{ github.sha }}" >> values.yaml
-          git add values.yaml
-          git commit -m "feat: update image tag to sha-${{ github.sha }}"
-          git push origin image-tag-sha-${{ github.sha }}
-          gh pr create --base main --head image-tag-sha-${{ github.sha }} --fill
-          gh pr merge --auto --squash
+  # update-image-in-chart:
+  #   needs: integration-test
+  #   if: github.ref == 'refs/heads/main'
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     contents: write
+  #     pull-requests: write
+  #   env:
+  #     GH_TOKEN: ${{ secrets.PAT_PR }}
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
+  #     - name: Open PR to update image in chart
+  #       run: |
+  #         git config --global user.email "nobody@example.com"
+  #         git config --global user.name "github-actions[bot]"
+  #         git fetch origin
+  #         git switch -c image-tag-sha-${{ github.sha }}
+  #         echo "image: sha-${{ github.sha }}" >> values.yaml
+  #         git add values.yaml
+  #         git commit -m "feat: update image tag to sha-${{ github.sha }}"
+  #         git push origin image-tag-sha-${{ github.sha }}
+  #         gh pr create --base main --head image-tag-sha-${{ github.sha }} --fill
+  #         gh pr merge --auto --squash

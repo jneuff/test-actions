@@ -5,6 +5,10 @@ on:
     branches: [main]
     tags:
       - image@v*
+    paths:
+      - CHANGELOG.md
+      - chart/**
+      - values.yaml
   pull_request:
     branches: [main]
 
@@ -55,16 +59,6 @@ jobs:
   integration-test-reusable:
     uses: jneuff/test-actions/.github/workflows/reusable.yaml@main
 
-  integration-test:
-    name: Generate output
-    runs-on: ubuntu-latest
-    # Map the job outputs to step outputs
-    steps:
-      - id: step1
-        run: echo "firstword=hello" >> $GITHUB_OUTPUT
-      - id: step2
-        run: echo "secondword=world" >> $GITHUB_OUTPUT
-
   release-please:
     runs-on: ubuntu-latest
     permissions:
@@ -72,7 +66,7 @@ jobs:
       pull-requests: write
       repository-projects: write
       issues: write
-    needs: ["integration-test"]
+    needs: ["integration-test-reusable"]
     outputs:
       release_created: ${{ steps.release-please.outputs.release_created }}
       tag_name: ${{ steps.release-please.outputs.tag_name }}
@@ -81,40 +75,15 @@ jobs:
         uses: googleapis/release-please-action@v4
       - if: ${{ steps.release-please.outputs.release_created }}
         run: echo ${{ steps.release-please.outputs.tag_name }}
-      - if: ${{ needs.integration-test.result }} == 'success'
+      - if: ${{ needs.integration-test-reusable.result }} == 'success'
         run: echo "integration tests pass"
 
   separate-job:
     runs-on: ubuntu-latest
-    needs: ["integration-test", "release-please"]
+    needs: ["integration-test-reusable", "release-please"]
     steps:
       - run: |
           echo "Separate job"
           echo ${{ toJson(needs.release-please.outputs) }}
-      - if: ${{ needs.release-please.outputs.release_created }} && ${{ needs.integration-test.result }} == 'success'
+      - if: ${{ needs.release-please.outputs.release_created }} && ${{ needs.integration-test-reusable.result }} == 'success'
         run: echo ${{ needs.release-please.outputs.tag_name }}
-
-  # update-image-in-chart:
-  #   needs: integration-test
-  #   if: github.ref == 'refs/heads/main'
-  #   runs-on: ubuntu-latest
-  #   permissions:
-  #     contents: write
-  #     pull-requests: write
-  #   env:
-  #     GH_TOKEN: ${{ secrets.PAT_PR }}
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v4
-  #     - name: Open PR to update image in chart
-  #       run: |
-  #         git config --global user.email "nobody@example.com"
-  #         git config --global user.name "github-actions[bot]"
-  #         git fetch origin
-  #         git switch -c image-tag-sha-${{ github.sha }}
-  #         echo "image: sha-${{ github.sha }}" >> values.yaml
-  #         git add values.yaml
-  #         git commit -m "feat: update image tag to sha-${{ github.sha }}"
-  #         git push origin image-tag-sha-${{ github.sha }}
-  #         gh pr create --base main --head image-tag-sha-${{ github.sha }} --fill
-  #         gh pr merge --auto --squash

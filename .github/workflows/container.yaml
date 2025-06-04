@@ -8,11 +8,13 @@ on:
     paths:
       - Containerfile
       - src/**
+      - .github/workflows/container.yaml
   pull_request:
     branches: [main]
     paths:
       - Containerfile
       - src/**
+      - .github/workflows/container.yaml
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref_name }}
@@ -35,29 +37,6 @@ jobs:
           echo "Ref type: ${{ github.ref_type }}"
           echo "Ref name: ${{ github.ref_name }}"
 
-
-  only-commit:
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-    steps:
-      - run: |
-          echo "Only commit"
-
-
-  only-tag:
-    runs-on: ubuntu-latest
-    if: github.ref_type == 'tag'
-    steps:
-      - run: |
-          echo "Only tag"
-
-  only-tag-special:
-    runs-on: ubuntu-latest
-    if: github.ref_type == 'tag' && startsWith(github.ref_name, 'image@v')
-    steps:
-      - run: |
-          echo "Only tag special"
-
   integration-test-reusable:
     uses: jneuff/test-actions/.github/workflows/reusable.yaml@main
 
@@ -79,16 +58,6 @@ jobs:
         run: echo ${{ steps.release-please.outputs.tag_name }}
       - if: ${{ needs.integration-test-reusable.result }} == 'success'
         run: echo "integration tests pass"
-
-  separate-job:
-    runs-on: ubuntu-latest
-    needs: ["integration-test-reusable", "release-please"]
-    steps:
-      - run: |
-          echo "Separate job"
-          echo ${{ toJson(needs.release-please.outputs) }}
-      - if: ${{ needs.release-please.outputs.release_created }} && ${{ needs.integration-test-reusable.result }} == 'success'
-        run: echo ${{ needs.release-please.outputs.tag_name }}
 
   update-image-in-chart:
     needs: integration-test-reusable

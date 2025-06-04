@@ -9,6 +9,7 @@ on:
       - CHANGELOG.md
       - chart/**
       - values.yaml
+      - .github/workflows/main.yml
   pull_request:
     branches: [main]
 
@@ -84,6 +85,6 @@ jobs:
     steps:
       - run: |
           echo "Separate job"
-          echo ${{ toJson(needs.release-please.outputs) }}
+          echo "${{ toJson(needs.release-please.outputs) }}"
       - if: ${{ needs.release-please.outputs.release_created }} && ${{ needs.integration-test-reusable.result }} == 'success'
         run: echo ${{ needs.release-please.outputs.tag_name }}

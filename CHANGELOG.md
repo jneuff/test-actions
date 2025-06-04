@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.3.0](https://github.com/jneuff/test-actions/compare/image@v0.2.0...image@v0.3.0) (2025-06-04)
+
+
+### Features
+
+* add separate job referencing rp and test ([69faedb](https://github.com/jneuff/test-actions/commit/69faedb11cde786ca759b404c79cf22da6dc2e95))
+* debug job output ([36f3f21](https://github.com/jneuff/test-actions/commit/36f3f21000f448552d08c581bbe2f0bd0e083a1d))
+* debug job output 2 ([6e55cbe](https://github.com/jneuff/test-actions/commit/6e55cbec00979678247b474c4d7f553e1fb0bdc4))
+* map outputs ([82c52ba](https://github.com/jneuff/test-actions/commit/82c52ba45d2b60756bf7fa25be57b13b650d2e91))
+* update image tag to sha-f05dc9563ba789b18058bd69ace65404edb17613 ([6f114a0](https://github.com/jneuff/test-actions/commit/6f114a0f22b214add4e038b259827209f126cf15))
+* update image tag to sha-f05dc9563ba789b18058bd69ace65404edb17613 ([e0f6fc2](https://github.com/jneuff/test-actions/commit/e0f6fc212271db9ebce77afbb046b831e3897f0d))
+
 ## [0.2.0](https://github.com/jneuff/test-actions/compare/image@v0.1.0...image@v0.2.0) (2025-05-21)
 
 

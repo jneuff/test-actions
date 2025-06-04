@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.4.0](https://github.com/jneuff/test-actions/compare/image@v0.3.0...image@v0.4.0) (2025-06-04)
+
+
+### Features
+
+* update image feature ([f788a91](https://github.com/jneuff/test-actions/commit/f788a9121a8ea96eacde716e6118936e299ba7a5))
+* work on image ([c907f59](https://github.com/jneuff/test-actions/commit/c907f597ab8628888ad277b8a7b74c4feab8b2c2))
+
+
+### Dependencies
+
+* update image tag to sha-f788a9121a8ea96eacde716e6118936e299ba7a5 ([#46](https://github.com/jneuff/test-actions/issues/46)) ([7e258c3](https://github.com/jneuff/test-actions/commit/7e258c385a90fdfc2cc57dd01fe3c97318c18347))
+
 ## [0.3.0](https://github.com/jneuff/test-actions/compare/image@v0.2.0...image@v0.3.0) (2025-06-04)
 
 

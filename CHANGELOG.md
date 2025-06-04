@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.1](https://github.com/jneuff/test-actions/compare/image@v0.4.0...image@v0.4.1) (2025-06-04)
+
+
+### Dependencies
+
+* update image tag to sha-2577eaf3685706cea71c50e259db99f8bfbf2e5f ([#47](https://github.com/jneuff/test-actions/issues/47)) ([c8b8058](https://github.com/jneuff/test-actions/commit/c8b8058c93ab63ba7ef070d10b4f64d5548d9857))
+
 ## [0.4.0](https://github.com/jneuff/test-actions/compare/image@v0.3.0...image@v0.4.0) (2025-06-04)
 
 

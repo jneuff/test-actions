@@ -62,11 +62,6 @@ jobs:
 
   release-please:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
-      repository-projects: write
-      issues: write
     needs: ["integration-test-reusable"]
     outputs:
       release_created: ${{ steps.release-please.outputs.release_created }}
@@ -74,6 +69,8 @@ jobs:
     steps:
       - id: release-please
         uses: googleapis/release-please-action@v4
+        with:
+          token: ${{ secrets.PAT_PR }}
       - if: ${{ steps.release-please.outputs.release_created }}
         run: echo ${{ steps.release-please.outputs.tag_name }}
       - if: ${{ needs.integration-test-reusable.result }} == 'success'

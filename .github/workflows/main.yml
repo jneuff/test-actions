@@ -62,6 +62,9 @@ jobs:
 
   release-please:
     runs-on: ubuntu-latest
+    if: >
+      github.event_name != 'pull_request' || 
+      !startsWith(github.event.pull_request.title, 'chore(main): release')
     needs: ["integration-test-reusable"]
     outputs:
       release_created: ${{ steps.release-please.outputs.release_created }}

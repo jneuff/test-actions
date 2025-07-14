@@ -1,4 +1,4 @@
-name: Chart pipeline
+name: Chart Pipeline
 
 on:
   push:
@@ -18,45 +18,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  long-running-test:
-    runs-on: ubuntu-latest
-    steps:
-      - run: |
-          echo "Long running test"
-          sleep 30
-
-  debug:
-    runs-on: ubuntu-latest
-    steps:
-      - run: |
-          echo "Event type: ${{ github.event_name }}"
-          echo "Ref: ${{ github.ref }}"
-          echo "Ref type: ${{ github.ref_type }}"
-          echo "Ref name: ${{ github.ref_name }}"
-
-
-  only-commit:
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-    steps:
-      - run: |
-          echo "Only commit"
-
-
-  only-tag:
-    runs-on: ubuntu-latest
-    if: github.ref_type == 'tag'
-    steps:
-      - run: |
-          echo "Only tag"
-
-  only-tag-special:
-    runs-on: ubuntu-latest
-    if: github.ref_type == 'tag' && startsWith(github.ref_name, 'image@v')
-    steps:
-      - run: |
-          echo "Only tag special"
-
   integration-test-reusable:
     uses: jneuff/test-actions/.github/workflows/reusable.yaml@main
 

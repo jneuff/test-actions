@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.8.0](https://github.com/jneuff/test-actions/compare/image@v0.7.0...image@v0.8.0) (2025-07-14)
+
+
+### Features
+
+* delete some lines of code 3 ([9c7d5f8](https://github.com/jneuff/test-actions/commit/9c7d5f8f159778131f849c17027c1d88a817290d))
+
+
+### Dependencies
+
+* update image tag to sha-9c7d5f8f159778131f849c17027c1d88a817290d ([#65](https://github.com/jneuff/test-actions/issues/65)) ([cca5437](https://github.com/jneuff/test-actions/commit/cca5437a9b2cdcc03216272fef47e07f3f6b33b4))
+
 ## [0.7.0](https://github.com/jneuff/test-actions/compare/image@v0.6.0...image@v0.7.0) (2025-07-14)
 
 

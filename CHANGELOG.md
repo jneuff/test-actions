@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.7.0](https://github.com/jneuff/test-actions/compare/image@v0.6.0...image@v0.7.0) (2025-07-14)
+
+
+### Features
+
+* add another line of code 6 ([#59](https://github.com/jneuff/test-actions/issues/59)) ([f5b01a9](https://github.com/jneuff/test-actions/commit/f5b01a930be69af6f9745e9d059b4ee3c963cfd2))
+* add another line of code 7 ([#61](https://github.com/jneuff/test-actions/issues/61)) ([1484fa4](https://github.com/jneuff/test-actions/commit/1484fa493fc662be25fac421d7fa4b98c5a06522))
+
+
+### Dependencies
+
+* update image tag to sha-1484fa493fc662be25fac421d7fa4b98c5a06522 ([#62](https://github.com/jneuff/test-actions/issues/62)) ([157534d](https://github.com/jneuff/test-actions/commit/157534db2570882abacfbc57d9335983010f87ff))
+* update image tag to sha-33d611e77a156bc90e8b7db76be8afc6187262f4 ([#57](https://github.com/jneuff/test-actions/issues/57)) ([3ba37db](https://github.com/jneuff/test-actions/commit/3ba37dba1cda864123363a7575c47bc9c06106ad))
+* update image tag to sha-f5b01a930be69af6f9745e9d059b4ee3c963cfd2 ([#60](https://github.com/jneuff/test-actions/issues/60)) ([b16a2cd](https://github.com/jneuff/test-actions/commit/b16a2cd711104db93ae594163ca2be2a9c1e8091))
+
 ## [0.6.0](https://github.com/jneuff/test-actions/compare/image@v0.5.0...image@v0.6.0) (2025-07-14)
 
 

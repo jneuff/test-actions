@@ -58,7 +58,13 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git fetch origin
           git switch -c image-tag-sha-${{ github.sha }}
+          
+          # Update the structured image.tag field in values.yaml
+          sed -i 's/tag: "sha-[^"]*"/tag: "sha-${{ github.sha }}"/' values.yaml
+          
+          # Also append the legacy format for backward compatibility
           echo "image: sha-${{ github.sha }}" >> values.yaml
+          
           git add values.yaml
           git commit -m "deps: update image tag to sha-${{ github.sha }}"
           git push origin image-tag-sha-${{ github.sha }}

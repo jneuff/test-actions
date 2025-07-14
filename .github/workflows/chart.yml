@@ -46,6 +46,59 @@ jobs:
       - if: ${{ needs.integration-test-reusable.result }} == 'success'
         run: echo "integration tests pass"
 
+  publish-chart:
+    runs-on: ubuntu-latest
+    needs: ["integration-test-reusable", "release-please"]
+    if: ${{ needs.release-please.outputs.release_created }}
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Install Helm
+        uses: azure/setup-helm@v4
+        with:
+          version: '3.13.0'
+      
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Extract version from tag
+        id: extract_version
+        run: |
+          # Extract version from tag (e.g., image@v1.0.0 -> 1.0.0)
+          TAG="${{ needs.release-please.outputs.tag_name }}"
+          VERSION=${TAG#image@v}
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Extracted version: $VERSION"
+      
+      - name: Update Chart version
+        run: |
+          VERSION="${{ steps.extract_version.outputs.version }}"
+          sed -i "s/version: .*/version: $VERSION/" chart/Chart.yaml
+          sed -i "s/appVersion: .*/appVersion: \"$VERSION\"/" chart/Chart.yaml
+          echo "Updated Chart.yaml with version: $VERSION"
+      
+      - name: Package and publish Helm chart
+        run: |
+          VERSION="${{ steps.extract_version.outputs.version }}"
+          CHART_NAME="test-actions"
+          REGISTRY="ghcr.io/${{ github.repository_owner }}"
+          
+          # Package the chart
+          helm package chart/ --version $VERSION
+          
+          # Push to OCI registry
+          helm push ${CHART_NAME}-${VERSION}.tgz oci://${REGISTRY}
+          
+          echo "Successfully published chart ${CHART_NAME}:${VERSION} to ${REGISTRY}"
+
   separate-job:
     runs-on: ubuntu-latest
     needs: ["integration-test-reusable", "release-please"]

@@ -40,6 +40,7 @@ jobs:
         uses: googleapis/release-please-action@v4
         with:
           token: ${{ secrets.PAT_PR }}
+      - run: echo "release-please result> ${{ steps.release-please.outputs }}"
       - if: ${{ steps.release-please.outputs.release_created }}
         run: echo ${{ steps.release-please.outputs.tag_name }}
       - if: ${{ needs.integration-test-reusable.result }} == 'success'

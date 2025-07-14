@@ -9,9 +9,14 @@ on:
       - CHANGELOG.md
       - chart/**
       - values.yaml
-      - .github/workflows/main.yml
+      - .github/workflows/chart.yml
   pull_request:
     branches: [main]
+    paths:
+      - CHANGELOG.md
+      - chart/**
+      - values.yaml
+      - .github/workflows/chart.yml
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref_name }}
